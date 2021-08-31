@@ -1,0 +1,42 @@
+﻿@*model blinding*@
+@model CodeAlong_Template.Models.Game
+@*get session and cookies in view uing  HttpContextAccessor*@
+
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+@{
+    ViewData["Title"] = "Game";
+}
+
+<h1>Create</h1>
+
+<h4>Game</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Number" class="control-label"></label>
+                <input asp-for="Number" class="form-control" />
+                <span asp-validation-for="Number" class="text-danger"></span>
+            </div>
+
+            <div>
+                @*// get session and cookies*@
+                <p> @HttpContextAccessor.HttpContext.Session.GetString("checkMatch")</p>
+                <p> @HttpContextAccessor.HttpContext.Session.GetString("near")</p>
+                <p>Number of attemps @HttpContextAccessor.HttpContext.Request.Cookies["attemps"]</p>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
